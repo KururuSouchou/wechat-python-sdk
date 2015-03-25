@@ -374,10 +374,11 @@ class WechatBasic(object):
 
         return self._get('https://api.weixin.qq.com/cgi-bin/menu/delete')
 
-    def upload_media(self, media_type, media_file, extension=''):
+    def upload_media(self, category=0, media_type, media_file, extension=''):
         """
         上传多媒体文件
         详情请参考 http://mp.weixin.qq.com/wiki/10/78b15308b053286e2a66b33f0f0f5fb6.html
+        :param category: 素材类别， 分别有临时素材（0）、永久素材(1)
         :param media_type: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
         :param media_file: 要上传的文件，一个 File object 或 StringIO object
         :param extension: 如果 media_file 传入的为 StringIO object，那么必须传入 extension 显示指明该媒体文件扩展名，如 ``mp3``, ``amr``；如果 media_file 传入的为 File object，那么该参数请留空
@@ -406,8 +407,13 @@ class WechatBasic(object):
         else:
             filename = media_file.name
 
+        if category == 0:
+            keyword = 'media'
+        elif category == 1:
+            keyword = 'material'
+
         return self._post(
-            url='http://file.api.weixin.qq.com/cgi-bin/media/upload',
+            url='http://file.api.weixin.qq.com/cgi-bin/%s/upload' % keyword,
             params={
                 'access_token': self.access_token,
                 'type': media_type,
@@ -417,17 +423,23 @@ class WechatBasic(object):
             }
         )
 
-    def download_media(self, media_id):
+    def download_media(self, category=0, media_id):
         """
         下载多媒体文件
         详情请参考 http://mp.weixin.qq.com/wiki/10/78b15308b053286e2a66b33f0f0f5fb6.html
+        :param category: 素材类别， 分别有临时素材（0）、永久素材(1)
         :param media_id: 媒体文件 ID
         :return: requests 的 Response 实例
         """
         self._check_appid_appsecret()
 
+        if category == 0:
+            keyword = 'media'
+        elif category == 1:
+            keyword = 'material'
+
         return requests.get(
-            'http://file.api.weixin.qq.com/cgi-bin/media/get',
+            'http://file.api.weixin.qq.com/cgi-bin/%s/get' % keyword,
             params={
                 'access_token': self.access_token,
                 'media_id': media_id,

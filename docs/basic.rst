@@ -284,7 +284,8 @@
         运行时检查：``appid``, ``appsecret``
 
         可用公众号类型：认证服务号
-
+		
+		:param category: 素材类别， 分别有临时素材（0）、永久素材(1)
         :param str media_type: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
         :param object media_file: 要上传的文件，一个 File object 或 StringIO object
         :param str extension: 如果 media_file 传入的为 StringIO object，那么必须传入 extension 显示指明该媒体文件扩展名，如 ``mp3``, ``amr``；如果 media_file 传入的为 File object，那么该参数请留空
@@ -308,6 +309,7 @@
 
         可用公众号类型：认证服务号
 
+		:param category: 素材类别， 分别有临时素材（0）、永久素材(1)
         :param str media_id: 媒体文件 ID
         :return: requests 的 Response 实例 (具体请参考 `<http://docs.python-requests.org/en/latest/>`_)
 
