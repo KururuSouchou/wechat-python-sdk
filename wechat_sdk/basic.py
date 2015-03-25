@@ -408,12 +408,12 @@ class WechatBasic(object):
             filename = media_file.name
 
         if category == 0:
-            keyword = 'media'
+            keyword = 'media/upload'
         elif category == 1:
-            keyword = 'material'
+            keyword = 'material/add_material'
 
         return self._post(
-            url='http://file.api.weixin.qq.com/cgi-bin/%s/upload' % keyword,
+            url='http://file.api.weixin.qq.com/cgi-bin/%s' % keyword,
             params={
                 'access_token': self.access_token,
                 'type': media_type,
@@ -434,12 +434,12 @@ class WechatBasic(object):
         self._check_appid_appsecret()
 
         if category == 0:
-            keyword = 'media'
+            keyword = 'media/get'
         elif category == 1:
-            keyword = 'material'
+            keyword = 'material/get_material'
 
         return requests.get(
-            'http://file.api.weixin.qq.com/cgi-bin/%s/get' % keyword,
+            'http://file.api.weixin.qq.com/cgi-bin/%s' % keyword,
             params={
                 'access_token': self.access_token,
                 'media_id': media_id,
